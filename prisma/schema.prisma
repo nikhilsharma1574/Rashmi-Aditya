@@ -21,3 +21,13 @@ model RSVP {
   message   String?
   createdAt DateTime @default(now())
 }
+
+model GalleryImage {
+  id        String   @id @default(uuid())
+  url       String
+  caption   String?
+  category  String   @default("Us")
+  createdAt DateTime @default(now())
+}
+
+

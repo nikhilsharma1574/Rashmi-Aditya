@@ -13,6 +13,7 @@ const playfair = Playfair_Display({
 });
 
 import LenisProvider from "@/components/LenisProvider";
+import AudioPlayer from "@/components/AudioPlayer";
 
 export const metadata: Metadata = {
   title: "Rashmi & Aditya - We're Getting Married",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex flex-col font-sans text-foreground bg-background">
         <LenisProvider>
           {children}
+          <AudioPlayer />
         </LenisProvider>
       </body>
     </html>

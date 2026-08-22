@@ -9,7 +9,13 @@ const events = [
     time: "10:00 AM",
     location: "Lakeview Terrace, Bhilai",
     description: "A morning filled with laughter, vibrant colors, and blessings.",
-    theme: "Yellow & White"
+    theme: "Yellow & White",
+    colors: [
+      { hex: "#FFD700", name: "Marigold Yellow" },
+      { hex: "#FFA500", name: "Bright Amber" },
+      { hex: "#FFFFFF", name: "Pure White" },
+      { hex: "#F5F5DC", name: "Cream Ivory" },
+    ]
   },
   {
     title: "Sangeet",
@@ -17,7 +23,13 @@ const events = [
     time: "6:00 PM Onwards",
     location: "The Royal Gardens, Bhilai",
     description: "Join us for an evening of music, dance, and colorful celebrations as we kick off the wedding festivities.",
-    theme: "Vibrant / Pastels"
+    theme: "Vibrant / Pastels",
+    colors: [
+      { hex: "#E91E63", name: "Royal Magenta" },
+      { hex: "#9C27B0", name: "Deep Purple" },
+      { hex: "#00BCD4", name: "Turquoise Teal" },
+      { hex: "#F48FB1", name: "Soft Pastel Pink" },
+    ]
   },
   {
     title: "The Wedding",
@@ -25,7 +37,13 @@ const events = [
     time: "5:00 PM Onwards",
     location: "Grand Palace Courtyard, Bhilai",
     description: "Witness our union as we take our vows under the open sky.",
-    theme: "Traditional / Reds"
+    theme: "Traditional / Reds",
+    colors: [
+      { hex: "#B71C1C", name: "Bridal Crimson Red" },
+      { hex: "#D4AF37", name: "Royal Metallic Gold" },
+      { hex: "#880E4F", name: "Deep Maroon" },
+      { hex: "#FFF8E7", name: "Warm Off-White" },
+    ]
   }
 ];
 
@@ -64,9 +82,27 @@ export default function Events() {
               <p className="text-foreground/70 leading-relaxed mb-6 flex-grow">{event.description}</p>
               
               <div className="mt-auto pt-4 border-t border-primary/10">
-                <p className="text-sm">
-                  <span className="font-semibold text-primary uppercase tracking-wide text-xs">Dress Code:</span> {event.theme}
+                <p className="text-xs uppercase tracking-wide font-semibold text-primary mb-2.5">
+                  Color Palette:
                 </p>
+                {/* 4 Real Color Circles */}
+                <div className="flex items-center gap-3">
+                  {event.colors.map((color, cIdx) => (
+                    <div
+                      key={cIdx}
+                      className="group relative"
+                    >
+                      <div
+                        className="w-8 h-8 rounded-full border-2 border-black/10 shadow-sm transition-transform duration-300 group-hover:scale-110"
+                        style={{ backgroundColor: color.hex }}
+                      />
+                      {/* Tooltip on hover */}
+                      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 bg-black/80 text-white text-[10px] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 font-sans">
+                        {color.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}
