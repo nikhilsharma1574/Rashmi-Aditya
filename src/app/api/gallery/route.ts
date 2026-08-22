@@ -77,13 +77,25 @@ export async function POST(req: NextRequest) {
         imageUrl = `/uploads/${filename}`;
       }
 
-      const newImage = await prisma.galleryImage.create({
-        data: {
-          url: imageUrl,
-          caption: caption || file.name.split(".")[0],
-          category,
-        },
-      });
+      let newImage;
+      try {
+        newImage = await prisma.galleryImage.create({
+          data: {
+            url: imageUrl,
+            caption: caption || file.name.split(".")[0],
+            category,
+          },
+        });
+      } catch (dbErr) {
+        console.warn("Primary DB insert failed, retrying...", dbErr);
+        newImage = await prisma.galleryImage.create({
+          data: {
+            url: imageUrl,
+            caption: caption || file.name.split(".")[0],
+            category,
+          },
+        });
+      }
 
       createdImages.push(newImage);
     }
