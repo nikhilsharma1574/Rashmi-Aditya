@@ -82,45 +82,27 @@ export default function GalleryManager({ initialImages }: { initialImages: Image
     : images.filter((img) => img.category === filterCategory);
 
   return (
-    <div style={{ marginTop: "3rem" }}>
-      <h2 style={{ fontSize: "1.75rem", color: "#8B6F4E", marginBottom: "1.5rem", fontFamily: "Georgia, serif" }}>
+    <div className="mt-10 font-sans">
+      <h2 className="text-xl sm:text-2xl text-[#8B6F4E] font-semibold mb-4 font-serif">
         📸 Manage Gallery Pictures
       </h2>
 
       {/* Upload Box */}
-      <div
-        style={{
-          background: "white",
-          borderRadius: "1rem",
-          padding: "2rem",
-          marginBottom: "2.5rem",
-          boxShadow: "0 2px 12px rgba(139,111,78,0.08)",
-          border: "1px solid #f0e8dc",
-        }}
-      >
-        <h3 style={{ fontSize: "1.1rem", fontWeight: "600", color: "#444", marginBottom: "1rem", fontFamily: "sans-serif" }}>
+      <div className="bg-white rounded-2xl p-4 sm:p-6 mb-8 shadow-sm border border-amber-100">
+        <h3 className="text-sm sm:text-base font-semibold text-stone-800 mb-3">
           Upload Photos (Multiple Supported)
         </h3>
 
-        <form onSubmit={handleUpload} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
+        <form onSubmit={handleUpload} className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: "500", color: "#666", marginBottom: "0.4rem", fontFamily: "sans-serif" }}>
+              <label className="block text-xs font-medium text-stone-600 mb-1">
                 Select Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "0.75rem",
-                  borderRadius: "0.5rem",
-                  border: "1px solid #e0d5c8",
-                  background: "white",
-                  fontFamily: "sans-serif",
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
+                className="w-full p-2.5 rounded-xl border border-stone-200 bg-white text-xs sm:text-sm text-stone-800 outline-none focus:ring-2 focus:ring-[#8B6F4E]/20"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -131,8 +113,8 @@ export default function GalleryManager({ initialImages }: { initialImages: Image
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: "500", color: "#666", marginBottom: "0.4rem", fontFamily: "sans-serif" }}>
-                Select Image Files (Select Multiple)
+              <label className="block text-xs font-medium text-stone-600 mb-1">
+                Select Image Files
               </label>
               <input
                 id="gallery-files-input"
@@ -141,20 +123,12 @@ export default function GalleryManager({ initialImages }: { initialImages: Image
                 multiple
                 onChange={(e) => setFiles(e.target.files)}
                 required
-                style={{
-                  width: "100%",
-                  padding: "0.6rem",
-                  borderRadius: "0.5rem",
-                  border: "1px solid #e0d5c8",
-                  background: "#faf8f5",
-                  fontFamily: "sans-serif",
-                  boxSizing: "border-box",
-                }}
+                className="w-full p-2 rounded-xl border border-stone-200 bg-stone-50 text-xs text-stone-700 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:bg-amber-100 file:text-amber-800"
               />
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: "500", color: "#666", marginBottom: "0.4rem", fontFamily: "sans-serif" }}>
+              <label className="block text-xs font-medium text-stone-600 mb-1">
                 Batch Caption (Optional)
               </label>
               <input
@@ -162,42 +136,27 @@ export default function GalleryManager({ initialImages }: { initialImages: Image
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
                 placeholder="e.g. Sangeet dance night"
-                style={{
-                  width: "100%",
-                  padding: "0.75rem",
-                  borderRadius: "0.5rem",
-                  border: "1px solid #e0d5c8",
-                  fontFamily: "sans-serif",
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
+                className="w-full p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm text-stone-800 outline-none focus:ring-2 focus:ring-[#8B6F4E]/20"
               />
             </div>
           </div>
 
           {files && files.length > 0 && (
-            <p style={{ fontSize: "0.85rem", color: "#8B6F4E", fontFamily: "sans-serif", fontWeight: "500" }}>
+            <p className="text-xs text-[#8B6F4E] font-medium">
               📎 {files.length} {files.length === 1 ? "photo" : "photos"} selected for category &quot;{category}&quot;
             </p>
           )}
 
-          {error && <p style={{ color: "#e57373", fontSize: "0.85rem", fontFamily: "sans-serif" }}>{error}</p>}
+          {error && <p className="text-xs text-rose-500">{error}</p>}
 
           <button
             type="submit"
             disabled={uploading || !files || files.length === 0}
-            style={{
-              alignSelf: "flex-start",
-              padding: "0.75rem 2rem",
-              background: uploading || !files || files.length === 0 ? "#d4b896" : "#8B6F4E",
-              color: "white",
-              border: "none",
-              borderRadius: "0.5rem",
-              fontWeight: "600",
-              cursor: uploading || !files || files.length === 0 ? "not-allowed" : "pointer",
-              fontFamily: "sans-serif",
-              transition: "background 0.2s",
-            }}
+            className={`self-start px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white transition-all shadow-sm ${
+              uploading || !files || files.length === 0
+                ? "bg-amber-200 cursor-not-allowed"
+                : "bg-[#8B6F4E] hover:bg-[#785e40]"
+            }`}
           >
             {uploading ? `Uploading ${files?.length || 0} Photos...` : "Upload Selected Photos"}
           </button>
@@ -205,26 +164,20 @@ export default function GalleryManager({ initialImages }: { initialImages: Image
       </div>
 
       {/* Filter Tabs */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-        <h3 style={{ fontSize: "1.1rem", fontWeight: "600", color: "#444", margin: 0, fontFamily: "sans-serif" }}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <h3 className="text-sm sm:text-base font-semibold text-stone-800">
           Uploaded Photos ({filteredImages.length})
         </h3>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           {["All", ...CATEGORIES].map((cat) => (
             <button
               key={cat}
               onClick={() => setFilterCategory(cat)}
-              style={{
-                padding: "0.4rem 0.9rem",
-                borderRadius: "9999px",
-                border: filterCategory === cat ? "none" : "1px solid #e0d5c8",
-                background: filterCategory === cat ? "#8B6F4E" : "white",
-                color: filterCategory === cat ? "white" : "#666",
-                fontSize: "0.8rem",
-                fontWeight: "600",
-                cursor: "pointer",
-                fontFamily: "sans-serif",
-              }}
+              className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                filterCategory === cat
+                  ? "bg-[#8B6F4E] text-white shadow-sm"
+                  : "bg-white text-stone-600 border border-stone-200 hover:bg-amber-50"
+              }`}
             >
               {cat}
             </button>
@@ -234,63 +187,32 @@ export default function GalleryManager({ initialImages }: { initialImages: Image
 
       {/* Gallery Grid */}
       {filteredImages.length === 0 ? (
-        <div style={{ background: "white", borderRadius: "1rem", padding: "3rem", textAlign: "center", border: "1px solid #f0e8dc" }}>
-          <p style={{ color: "#aaa", fontFamily: "sans-serif" }}>
+        <div className="bg-white rounded-2xl p-8 text-center border border-amber-100">
+          <p className="text-xs sm:text-sm text-stone-400">
             No uploaded photos in {filterCategory === "All" ? "gallery" : `"${filterCategory}"`} category.
           </p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.25rem" }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
           {filteredImages.map((img) => (
             <div
               key={img.id}
-              style={{
-                background: "white",
-                borderRadius: "0.75rem",
-                overflow: "hidden",
-                border: "1px solid #f0e8dc",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-                display: "flex",
-                flexDirection: "column",
-              }}
+              className="bg-white rounded-xl overflow-hidden border border-amber-100 shadow-sm flex flex-col justify-between"
             >
-              <div style={{ position: "relative", width: "100%", height: "160px", background: "#f0ece7" }}>
-                <Image src={img.url} alt={img.caption || "Gallery photo"} fill style={{ objectFit: "cover" }} />
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "0.5rem",
-                    right: "0.5rem",
-                    background: "rgba(0,0,0,0.6)",
-                    color: "white",
-                    padding: "0.2rem 0.6rem",
-                    borderRadius: "9999px",
-                    fontSize: "0.7rem",
-                    fontFamily: "sans-serif",
-                    fontWeight: "600",
-                  }}
-                >
+              <div className="relative w-full aspect-square bg-stone-100">
+                <Image src={img.url} alt={img.caption || "Gallery photo"} fill className="object-cover" />
+                <span className="absolute top-1.5 right-1.5 bg-black/60 text-white px-2 py-0.5 rounded-md text-[10px] font-semibold">
                   {img.category || "Us"}
                 </span>
               </div>
-              <div style={{ padding: "0.85rem", display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "space-between" }}>
-                <p style={{ fontSize: "0.85rem", color: "#555", fontFamily: "sans-serif", marginBottom: "0.5rem" }}>
-                  {img.caption || <span style={{ color: "#aaa", fontStyle: "italic" }}>No caption</span>}
+              <div className="p-2.5 flex flex-col justify-between flex-grow">
+                <p className="text-xs text-stone-700 line-clamp-1 mb-2">
+                  {img.caption || <span className="text-stone-300 italic">No caption</span>}
                 </p>
                 <button
                   onClick={() => handleDelete(img.id)}
                   disabled={deletingId === img.id}
-                  style={{
-                    padding: "0.4rem 0.75rem",
-                    background: "#ffebee",
-                    color: "#c62828",
-                    border: "1px solid #ffcdd2",
-                    borderRadius: "0.4rem",
-                    fontSize: "0.75rem",
-                    fontWeight: "600",
-                    cursor: "pointer",
-                    fontFamily: "sans-serif",
-                  }}
+                  className="w-full py-1 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-[11px] font-semibold transition-colors"
                 >
                   {deletingId === img.id ? "Deleting..." : "Delete Photo"}
                 </button>

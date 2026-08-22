@@ -28,89 +28,119 @@ export default async function AdminPage() {
   const totalGuests = attending.reduce((sum, r) => sum + r.guests, 0);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#faf8f5", padding: "2rem", fontFamily: "Georgia, serif" }}>
-      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+    <div className="min-h-screen bg-[#faf8f5] py-6 px-3 sm:px-6 md:py-12 font-serif">
+      <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+        <div className="text-center mb-8 sm:mb-10">
           <img
             src="/logo.png"
             alt="Rashmi & Aditya Monogram"
-            style={{ width: "80px", height: "80px", objectFit: "contain", margin: "0 auto 1rem" }}
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain mx-auto mb-3"
           />
-          <h1 style={{ fontSize: "2.5rem", color: "#8B6F4E", marginBottom: "0.5rem" }}>
+          <h1 className="text-2xl sm:text-4xl text-[#8B6F4E] font-bold mb-1">
             👑 Admin Dashboard
           </h1>
-          <p style={{ color: "#999", fontFamily: "sans-serif" }}>Rashmi &amp; Aditya — Wedding Portal</p>
+          <p className="text-xs sm:text-sm text-stone-500 font-sans">Rashmi &amp; Aditya — Wedding Portal</p>
         </div>
 
-        <h2 style={{ fontSize: "1.75rem", color: "#8B6F4E", marginBottom: "1.25rem" }}>
+        <h2 className="text-xl sm:text-2xl text-[#8B6F4E] font-semibold mb-4">
           💌 RSVP Responses
         </h2>
 
-        {/* Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
-          <div style={{ background: "white", borderRadius: "1rem", padding: "1.5rem", textAlign: "center", boxShadow: "0 2px 12px rgba(139,111,78,0.08)", border: "1px solid #f0e8dc" }}>
-            <div style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#8B6F4E" }}>{rsvps.length}</div>
-            <div style={{ color: "#999", fontFamily: "sans-serif", fontSize: "0.85rem", marginTop: "0.25rem" }}>Total Responses</div>
+        {/* Stats Grid - Responsive 1 col on mobile, 3 cols on tablet/desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+          <div className="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm shadow-amber-900/5 border border-amber-100">
+            <div className="text-3xl sm:text-4xl font-bold text-[#8B6F4E]">{rsvps.length}</div>
+            <div className="text-xs sm:text-sm text-stone-500 font-sans mt-1">Total Responses</div>
           </div>
-          <div style={{ background: "white", borderRadius: "1rem", padding: "1.5rem", textAlign: "center", boxShadow: "0 2px 12px rgba(139,111,78,0.08)", border: "1px solid #f0e8dc" }}>
-            <div style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#4CAF50" }}>{attending.length}</div>
-            <div style={{ color: "#999", fontFamily: "sans-serif", fontSize: "0.85rem", marginTop: "0.25rem" }}>Attending ({totalGuests} guests total)</div>
+          <div className="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm shadow-amber-900/5 border border-amber-100">
+            <div className="text-3xl sm:text-4xl font-bold text-emerald-600">{attending.length}</div>
+            <div className="text-xs sm:text-sm text-stone-500 font-sans mt-1">Attending ({totalGuests} guests)</div>
           </div>
-          <div style={{ background: "white", borderRadius: "1rem", padding: "1.5rem", textAlign: "center", boxShadow: "0 2px 12px rgba(139,111,78,0.08)", border: "1px solid #f0e8dc" }}>
-            <div style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#e57373" }}>{declining.length}</div>
-            <div style={{ color: "#999", fontFamily: "sans-serif", fontSize: "0.85rem", marginTop: "0.25rem" }}>Declining</div>
+          <div className="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm shadow-amber-900/5 border border-amber-100">
+            <div className="text-3xl sm:text-4xl font-bold text-rose-500">{declining.length}</div>
+            <div className="text-xs sm:text-sm text-stone-500 font-sans mt-1">Declining</div>
           </div>
         </div>
 
-        {/* Table */}
+        {/* RSVP Section */}
         {rsvps.length === 0 ? (
-          <div style={{ background: "white", borderRadius: "1rem", padding: "4rem", textAlign: "center", boxShadow: "0 2px 12px rgba(139,111,78,0.08)" }}>
-            <p style={{ color: "#bbb", fontFamily: "sans-serif", fontSize: "1.1rem" }}>No RSVPs yet. Share the website!</p>
+          <div className="bg-white rounded-2xl p-8 sm:p-12 text-center shadow-sm border border-amber-100 mb-10">
+            <p className="text-stone-400 font-sans text-sm sm:text-base">No RSVPs yet. Share the website!</p>
           </div>
         ) : (
-          <div style={{ background: "white", borderRadius: "1rem", overflow: "hidden", boxShadow: "0 2px 12px rgba(139,111,78,0.08)", border: "1px solid #f0e8dc" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "sans-serif" }}>
-              <thead>
-                <tr style={{ background: "#8B6F4E", color: "white" }}>
-                  <th style={{ padding: "1rem", textAlign: "left", fontWeight: "600", fontSize: "0.85rem" }}>Name</th>
-                  <th style={{ padding: "1rem", textAlign: "left", fontWeight: "600", fontSize: "0.85rem" }}>Phone</th>
-                  <th style={{ padding: "1rem", textAlign: "center", fontWeight: "600", fontSize: "0.85rem" }}>Status</th>
-                  <th style={{ padding: "1rem", textAlign: "center", fontWeight: "600", fontSize: "0.85rem" }}>Guests</th>
-                  <th style={{ padding: "1rem", textAlign: "left", fontWeight: "600", fontSize: "0.85rem" }}>Message</th>
-                  <th style={{ padding: "1rem", textAlign: "left", fontWeight: "600", fontSize: "0.85rem" }}>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rsvps.map((rsvp, i) => (
-                  <tr key={rsvp.id} style={{ borderBottom: "1px solid #f0e8dc", background: i % 2 === 0 ? "white" : "#faf8f5" }}>
-                    <td style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>{rsvp.name}</td>
-                    <td style={{ padding: "1rem", color: "#666" }}>{rsvp.phone}</td>
-                    <td style={{ padding: "1rem", textAlign: "center" }}>
-                      <span style={{
-                        display: "inline-block",
-                        padding: "0.25rem 0.75rem",
-                        borderRadius: "9999px",
-                        fontSize: "0.75rem",
-                        fontWeight: "600",
-                        background: rsvp.attending ? "#e8f5e9" : "#ffebee",
-                        color: rsvp.attending ? "#2e7d32" : "#c62828",
-                      }}>
-                        {rsvp.attending ? "✓ Attending" : "✗ Declining"}
-                      </span>
-                    </td>
-                    <td style={{ padding: "1rem", textAlign: "center", color: "#666" }}>{rsvp.attending ? rsvp.guests : "—"}</td>
-                    <td style={{ padding: "1rem", color: "#666", maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {rsvp.message || <span style={{ color: "#ccc" }}>—</span>}
-                    </td>
-                    <td style={{ padding: "1rem", color: "#999", fontSize: "0.8rem", whiteSpace: "nowrap" }}>
-                      {new Date(rsvp.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mb-10">
+            {/* Mobile View: Clean Responsive Cards */}
+            <div className="block sm:hidden space-y-3 font-sans">
+              {rsvps.map((rsvp) => (
+                <div key={rsvp.id} className="bg-white rounded-xl p-4 border border-amber-100 shadow-sm space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-stone-900 text-base">{rsvp.name}</span>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                      rsvp.attending ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"
+                    }`}>
+                      {rsvp.attending ? "✓ Attending" : "✗ Declining"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-stone-600">
+                    <span>📞 {rsvp.phone}</span>
+                    <span>👥 {rsvp.attending ? `${rsvp.guests} guests` : "0 guests"}</span>
+                  </div>
+
+                  {rsvp.message && (
+                    <div className="text-xs bg-amber-50/50 p-2.5 rounded-lg text-stone-700 italic border border-amber-100/50">
+                      &quot;{rsvp.message}&quot;
+                    </div>
+                  )}
+
+                  <div className="text-[10px] text-stone-400 text-right">
+                    {new Date(rsvp.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop/Tablet View: Full Table */}
+            <div className="hidden sm:block bg-white rounded-2xl overflow-hidden shadow-sm border border-amber-100">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse font-sans text-sm">
+                  <thead>
+                    <tr className="bg-[#8B6F4E] text-white">
+                      <th className="p-3.5 text-left font-semibold">Name</th>
+                      <th className="p-3.5 text-left font-semibold">Phone</th>
+                      <th className="p-3.5 text-center font-semibold">Status</th>
+                      <th className="p-3.5 text-center font-semibold">Guests</th>
+                      <th className="p-3.5 text-left font-semibold">Message</th>
+                      <th className="p-3.5 text-left font-semibold">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rsvps.map((rsvp, i) => (
+                      <tr key={rsvp.id} className={`border-b border-amber-100 ${i % 2 === 0 ? "bg-white" : "bg-[#faf8f5]"}`}>
+                        <td className="p-3.5 font-semibold text-stone-900">{rsvp.name}</td>
+                        <td className="p-3.5 text-stone-600">{rsvp.phone}</td>
+                        <td className="p-3.5 text-center">
+                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                            rsvp.attending ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"
+                          }`}>
+                            {rsvp.attending ? "✓ Attending" : "✗ Declining"}
+                          </span>
+                        </td>
+                        <td className="p-3.5 text-center text-stone-600">{rsvp.attending ? rsvp.guests : "—"}</td>
+                        <td className="p-3.5 text-stone-600 max-w-[200px] truncate">
+                          {rsvp.message || <span className="text-stone-300">—</span>}
+                        </td>
+                        <td className="p-3.5 text-stone-400 text-xs whitespace-nowrap">
+                          {new Date(rsvp.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 
