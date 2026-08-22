@@ -11,15 +11,34 @@ export async function GET(req: NextRequest) {
 
     const whereClause = category && category !== "All" ? { category } : {};
 
-    const images = await prisma.galleryImage.findMany({
-      where: whereClause,
-      orderBy: { createdAt: "desc" },
-    });
+    let images = [];
+    try {
+      images = await prisma.galleryImage.findMany({
+        where: whereClause,
+        orderBy: { createdAt: "desc" },
+      });
+    } catch (dbErr) {
+      console.warn("DB gallery fetch failed, falling back to Supabase storage:", dbErr);
+    }
+
+    // Fallback: If DB returns empty or failed, fetch uploaded pictures directly from Supabase Storage bucket
+    if (images.length === 0) {
+      const { data: storageFiles } = await supabase.storage.from("gallery").list();
+      if (storageFiles && storageFiles.length > 0) {
+        images = storageFiles.map((file, idx) => ({
+          id: file.id || `storage-${idx}`,
+          url: `https://rtrhiahpdxdryzqwirci.supabase.co/storage/v1/object/public/gallery/${file.name}`,
+          caption: "Wedding Memory",
+          category: "Wedding",
+          createdAt: file.created_at || new Date().toISOString(),
+        }));
+      }
+    }
 
     return NextResponse.json(images);
   } catch (error) {
     console.error("Failed to fetch gallery images:", error);
-    return NextResponse.json({ error: "Failed to fetch images" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }
 
