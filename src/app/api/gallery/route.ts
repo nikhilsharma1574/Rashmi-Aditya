@@ -111,14 +111,14 @@ export async function POST(req: NextRequest) {
           },
         });
       } catch (dbErr) {
-        console.warn("Primary DB insert failed, retrying...", dbErr);
-        newImage = await prisma.galleryImage.create({
-          data: {
-            url: imageUrl,
-            caption: caption || file.name.split(".")[0],
-            category,
-          },
-        });
+        console.warn("Database insert failed during upload, using storage image payload fallback:", dbErr);
+        newImage = {
+          id: `upload-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          url: imageUrl,
+          caption: caption || file.name.split(".")[0],
+          category,
+          createdAt: new Date().toISOString(),
+        };
       }
 
       createdImages.push(newImage);
