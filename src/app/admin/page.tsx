@@ -22,6 +22,11 @@ export default async function AdminPage() {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+          <img
+            src="/logo.png"
+            alt="Rashmi & Aditya Monogram"
+            style={{ width: "80px", height: "80px", objectFit: "contain", margin: "0 auto 1rem" }}
+          />
           <h1 style={{ fontSize: "2.5rem", color: "#8B6F4E", marginBottom: "0.5rem" }}>
             👑 Admin Dashboard
           </h1>

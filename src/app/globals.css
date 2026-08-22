@@ -5,6 +5,7 @@
   --foreground: #2c312c;
   --primary: #9b6a6c;
   --primary-foreground: #ffffff;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -14,15 +15,6 @@
   --color-primary-foreground: var(--primary-foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #121212;
-    --foreground: #eaeaea;
-    --primary: #b58688;
-    --primary-foreground: #ffffff;
-  }
 }
 
 body {

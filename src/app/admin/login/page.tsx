@@ -50,20 +50,17 @@ export default function AdminLoginPage() {
         border: "1px solid #f0e8dc",
         textAlign: "center",
       }}>
-        {/* Icon */}
-        <div style={{
-          width: "64px",
-          height: "64px",
-          background: "#fdf0e8",
-          borderRadius: "50%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          margin: "0 auto 1.5rem",
-          fontSize: "1.75rem",
-        }}>
-          🔐
-        </div>
+        {/* Logo Monogram */}
+        <img
+          src="/logo.png"
+          alt="Rashmi & Aditya Monogram"
+          style={{
+            width: "80px",
+            height: "80px",
+            objectFit: "contain",
+            margin: "0 auto 1rem",
+          }}
+        />
 
         <h1 style={{ fontSize: "1.75rem", color: "#8B6F4E", marginBottom: "0.5rem" }}>
           Admin Portal
