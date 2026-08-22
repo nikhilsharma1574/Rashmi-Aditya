@@ -33,20 +33,6 @@ export default function Hero() {
       <div
         className="relative z-10 text-center text-white flex flex-col items-center px-4"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="mb-6 relative w-24 h-24 md:w-32 md:h-32 drop-shadow-lg"
-        >
-          <Image
-            src="/logo.png"
-            alt="Rashmi & Aditya Monogram"
-            fill
-            className="object-contain"
-            priority
-          />
-        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
