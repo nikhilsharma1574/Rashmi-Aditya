@@ -2,11 +2,15 @@ import { PrismaClient } from '../generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:%21Poonam%400203@db.rtrhiahpdxdryzqwirci.supabase.co:5432/postgres'
+// Use Supabase pooled connection string (port 6543 / 5432) with SSL for serverless environments
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:%21Poonam%400203@db.rtrhiahpdxdryzqwirci.supabase.co:6543/postgres'
 
 const pool = new pg.Pool({ 
   connectionString,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
+  max: 10,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
 })
 
 const adapter = new PrismaPg(pool)
