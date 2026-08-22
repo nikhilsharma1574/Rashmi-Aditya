@@ -2,15 +2,20 @@ import { PrismaClient } from '../generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import pg from 'pg'
 
-// Use Supabase pooled connection string (port 6543 / 5432) with SSL for serverless environments
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:%21Poonam%400203@db.rtrhiahpdxdryzqwirci.supabase.co:6543/postgres'
+// Force port 6543 (Supabase Transaction Pooler) on Vercel to prevent connection exhaustion
+let rawConnectionString = process.env.DATABASE_URL || 'postgresql://postgres:%21Poonam%400203@db.rtrhiahpdxdryzqwirci.supabase.co:6543/postgres'
+
+// Replace direct port 5432 with pooled port 6543 if set in environment variables
+if (rawConnectionString.includes(':5432/')) {
+  rawConnectionString = rawConnectionString.replace(':5432/', ':6543/')
+}
 
 const pool = new pg.Pool({ 
-  connectionString,
+  connectionString: rawConnectionString,
   ssl: { rejectUnauthorized: false },
-  max: 10,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
+  max: 5,
+  idleTimeoutMillis: 10000,
+  connectionTimeoutMillis: 15000,
 })
 
 const adapter = new PrismaPg(pool)
