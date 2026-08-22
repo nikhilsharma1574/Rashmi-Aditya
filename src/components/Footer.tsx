@@ -9,7 +9,7 @@ export default function Footer() {
         <img
           src="/logo.png"
           alt="Rashmi & Aditya Monogram"
-          className="w-16 h-16 md:w-20 md:h-20 object-contain"
+          className="w-28 h-28 md:w-40 md:h-40 object-contain drop-shadow-md"
         />
       </div>
     </footer>
