@@ -9,7 +9,7 @@ export default function AudioPlayer() {
     // Local audio file public/music.mp3
     const audio = new Audio("/music.mp3");
     audio.loop = true; // Auto-repeat continuously on loop
-    audio.volume = 0.25; // Preset low background volume (25%)
+    audio.volume = 0.04; // Preset low background volume (25%)
     audioRef.current = audio;
 
     // Autoplay logic - starts immediately & handles browser autoplay interaction rules
