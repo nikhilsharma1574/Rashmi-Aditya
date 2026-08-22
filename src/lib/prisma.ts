@@ -5,7 +5,6 @@ import pg from 'pg'
 // Force port 6543 (Supabase Transaction Pooler) on Vercel to prevent connection exhaustion
 let rawConnectionString = process.env.DATABASE_URL || 'postgresql://postgres:%21Poonam%400203@db.rtrhiahpdxdryzqwirci.supabase.co:6543/postgres'
 
-// Replace direct port 5432 with pooled port 6543 if set in environment variables
 if (rawConnectionString.includes(':5432/')) {
   rawConnectionString = rawConnectionString.replace(':5432/', ':6543/')
 }
@@ -13,9 +12,8 @@ if (rawConnectionString.includes(':5432/')) {
 const pool = new pg.Pool({ 
   connectionString: rawConnectionString,
   ssl: { rejectUnauthorized: false },
-  max: 5,
-  idleTimeoutMillis: 10000,
-  connectionTimeoutMillis: 15000,
+  max: 1, // Recommended for serverless single function instances
+  connectionTimeoutMillis: 10000,
 })
 
 const adapter = new PrismaPg(pool)
