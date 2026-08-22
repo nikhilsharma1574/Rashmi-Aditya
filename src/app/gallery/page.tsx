@@ -93,29 +93,28 @@ export default function FullGallery() {
             <p className="text-foreground/60 font-serif text-lg">No photos in &quot;{selectedCategory}&quot; category yet.</p>
           </div>
         ) : (
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
             {filteredImages.map((img, i) => (
               <motion.div
                 key={img.id || i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                className="relative overflow-hidden rounded-xl break-inside-avoid group cursor-pointer shadow-md shadow-primary/5 border border-primary/5"
+                transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+                className="relative aspect-square overflow-hidden rounded-xl group cursor-pointer shadow-sm shadow-primary/5 border border-primary/10"
               >
                 <Image 
                   src={img.url} 
                   alt={img.caption || `Gallery photo ${i + 1}`} 
-                  width={800} 
-                  height={800} 
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" 
+                  fill 
+                  className="object-cover hover:scale-105 transition-transform duration-700" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                  <span className="text-xs font-semibold text-white/80 uppercase tracking-widest bg-primary/80 self-start px-2.5 py-1 rounded-md mb-2">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2.5 sm:p-4">
+                  <span className="text-[10px] sm:text-xs font-semibold text-white/90 uppercase tracking-widest bg-primary/80 self-start px-2 py-0.5 rounded mb-1">
                     {img.category || "Us"}
                   </span>
                   {img.caption && (
-                    <p className="text-white text-base font-serif">{img.caption}</p>
+                    <p className="text-white text-xs sm:text-sm font-serif line-clamp-1">{img.caption}</p>
                   )}
                 </div>
               </motion.div>

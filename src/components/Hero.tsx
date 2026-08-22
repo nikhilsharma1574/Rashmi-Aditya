@@ -23,7 +23,8 @@ export default function Hero() {
   const doorLeftX = useTransform(scrollYProgress, [0, 0.45], ["0%", "-90%"]);
   const doorRightX = useTransform(scrollYProgress, [0, 0.45], ["0%", "90%"]);
   const doorOpacity = useTransform(scrollYProgress, [0.35, 0.48], [1, 0]);
-  const scrollPromptOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  // Scroll To Enter gold prompt fades out immediately when scrolling starts (0.01 to 0.05 scroll progress)
+  const scrollPromptOpacity = useTransform(scrollYProgress, [0.01, 0.05], [1, 0]);
 
   return (
     <section ref={ref} className="relative min-h-[100dvh] w-full overflow-hidden flex items-center justify-center">
@@ -161,6 +162,7 @@ export default function Hero() {
       </div>
 
       <motion.div
+        style={{ opacity: scrollPromptOpacity }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
