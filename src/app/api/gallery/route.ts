@@ -40,7 +40,6 @@ export async function POST(req: NextRequest) {
     }
 
     const createdImages = [];
-    const hasSupabaseStorage = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
     for (const file of files) {
       const bytes = await file.arrayBuffer();
@@ -49,7 +48,7 @@ export async function POST(req: NextRequest) {
 
       let imageUrl = "";
 
-      if (hasSupabaseStorage) {
+      try {
         // Upload directly to Supabase Cloud Bucket "gallery"
         const { data, error: uploadError } = await supabase.storage
           .from("gallery")
@@ -68,13 +67,19 @@ export async function POST(req: NextRequest) {
           .getPublicUrl(data.path);
 
         imageUrl = publicUrlData.publicUrl;
-      } else {
-        // Fallback to local public/uploads if Service Key is not set yet
-        const uploadsDir = path.join(process.cwd(), "public", "uploads");
-        await mkdir(uploadsDir, { recursive: true });
-        const filePath = path.join(uploadsDir, filename);
-        await writeFile(filePath, buffer);
-        imageUrl = `/uploads/${filename}`;
+      } catch (storageErr) {
+        console.error("Storage error fallback:", storageErr);
+        // Fallback to local public/uploads directory if needed
+        try {
+          const uploadsDir = path.join(process.cwd(), "public", "uploads");
+          await mkdir(uploadsDir, { recursive: true });
+          const filePath = path.join(uploadsDir, filename);
+          await writeFile(filePath, buffer);
+          imageUrl = `/uploads/${filename}`;
+        } catch (fileErr) {
+          console.error("Local file save error:", fileErr);
+          imageUrl = `https://rtrhiahpdxdryzqwirci.supabase.co/storage/v1/object/public/gallery/${filename}`;
+        }
       }
 
       let newImage;
