@@ -4,13 +4,24 @@ import GalleryManager from "@/components/GalleryManager";
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const rsvps = await prisma.rSVP.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  let rsvps: any[] = [];
+  let galleryImages: any[] = [];
 
-  const galleryImages = await prisma.galleryImage.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  try {
+    rsvps = await prisma.rSVP.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (e) {
+    console.error("Failed to fetch RSVPs:", e);
+  }
+
+  try {
+    galleryImages = await prisma.galleryImage.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (e) {
+    console.error("Failed to fetch Gallery images:", e);
+  }
 
   const attending = rsvps.filter((r) => r.attending);
   const declining = rsvps.filter((r) => !r.attending);
