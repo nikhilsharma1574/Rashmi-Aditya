@@ -33,6 +33,7 @@ export default function FullGallery() {
         if (res.ok) {
           const uploaded: GalleryItem[] = await res.json();
           if (uploaded.length > 0) {
+            // Priority to uploaded photos, then default placeholder images
             setImages([...uploaded, ...defaultImages]);
           }
         }
@@ -47,7 +48,9 @@ export default function FullGallery() {
 
   const filteredImages = selectedCategory === "All"
     ? images
-    : images.filter((img) => img.category === selectedCategory);
+    : images.filter((img) => 
+        img.category && img.category.toLowerCase().trim() === selectedCategory.toLowerCase().trim()
+      );
 
   return (
     <main className="min-h-screen bg-background py-16 px-4">
