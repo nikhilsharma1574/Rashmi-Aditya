@@ -1,15 +1,26 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
+    // Disable music completely on Admin pages (/admin and /admin/login)
+    if (pathname.startsWith("/admin")) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      return;
+    }
+
     // Local audio file public/music.mp3
     const audio = new Audio("/music.mp3");
     audio.loop = true; // Auto-repeat continuously on loop
-    audio.volume = 0.04; // Preset low background volume (25%)
+    audio.volume = 0.04; // Low background volume
     audioRef.current = audio;
 
     // Autoplay logic - starts immediately & handles browser autoplay interaction rules
@@ -38,7 +49,7 @@ export default function AudioPlayer() {
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [pathname]);
 
-  return null; // Invisible component - no floating UI or mute buttons
+  return null; // Invisible component
 }
