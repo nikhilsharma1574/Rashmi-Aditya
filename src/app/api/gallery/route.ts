@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
 
     const whereClause = category && category !== "All" ? { category } : {};
 
-    let images = [];
+    let images: any[] = [];
     try {
       images = await prisma.galleryImage.findMany({
         where: whereClause,
