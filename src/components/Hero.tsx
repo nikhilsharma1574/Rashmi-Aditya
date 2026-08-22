@@ -74,22 +74,6 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* FRONT LAYER 3: ROYAL ARCHWAY FRAME (DoorFrameClean.png - Stretches 100% X and Y to fit screen) */}
-          <motion.div
-            style={{ scale: frameScale }}
-            className="absolute inset-0 w-full h-full z-20 origin-center pointer-events-none"
-          >
-            <img
-              src="/DoorFrameClean.png"
-              alt="Royal Archway Frame"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "fill",
-                objectPosition: "center",
-              }}
-            />
-          </motion.div>
         </div>
 
         {/* Bottom Center Gold Scroll Prompt (Fades out completely after 12% scroll) */}
